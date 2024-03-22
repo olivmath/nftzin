@@ -1,21 +1,21 @@
-import '../styles/global.css';
-import '@rainbow-me/rainbowkit/styles.css';
-import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
+import "../styles/global.css";
+import "@rainbow-me/rainbowkit/styles.css";
+import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 
 import {
   RainbowKitProvider,
   getDefaultWallets,
   Locale,
   getDefaultConfig,
-  darkTheme
-} from '@rainbow-me/rainbowkit';
+  darkTheme,
+} from "@rainbow-me/rainbowkit";
 import {
   argentWallet,
   trustWallet,
   ledgerWallet,
-} from '@rainbow-me/rainbowkit/wallets';
-import { WagmiProvider } from 'wagmi';
+} from "@rainbow-me/rainbowkit/wallets";
+import { WagmiProvider } from "wagmi";
 import {
   anvil,
   arbitrum,
@@ -24,7 +24,8 @@ import {
   optimismSepolia,
   polygon,
 } from "wagmi/chains";
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Layout from "./layout";
 
 const { wallets } = getDefaultWallets();
 
@@ -56,7 +57,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             accentColorForeground: "white",
           })}
         >
-          <Component {...pageProps} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>

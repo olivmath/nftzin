@@ -1,19 +1,21 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { useAccount } from 'wagmi';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
-import Link from 'next/link';
 
 const Home: NextPage = () => {
+  const { isConnected } = useAccount();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isConnected) {
+      router.push('/view');
+    }
+  }, [isConnected, router]);
+
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          padding: 12,
-        }}
-      >
-        <ConnectButton />
-      </div>
       <div
         style={{
           fontSize: "240px",
@@ -24,9 +26,7 @@ const Home: NextPage = () => {
           justifyContent: "center",
         }}
       >
-        <Link href="/view">
-          <main>NFTzin</main>
-        </Link>
+        <main>NFTzin</main>
       </div>
     </>
   );
