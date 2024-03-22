@@ -8,6 +8,7 @@ import {
   getDefaultWallets,
   Locale,
   getDefaultConfig,
+  darkTheme
 } from '@rainbow-me/rainbowkit';
 import {
   argentWallet,
@@ -28,8 +29,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-  appName: "RainbowKit demo",
-  projectId: "YOUR_PROJECT_ID",
+  appName: "NFTzin",
+  projectId: "4f1214",
   wallets: [
     ...wallets,
     {
@@ -48,7 +49,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider locale={locale}>
+        <RainbowKitProvider
+          locale={locale}
+          theme={darkTheme({
+            accentColor: "#0e0e0e",
+            accentColorForeground: "white",
+          })}
+        >
           <Component {...pageProps} />
         </RainbowKitProvider>
       </QueryClientProvider>
