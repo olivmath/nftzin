@@ -62,7 +62,7 @@ contract NFTzin is ERC721, Ownable {
         require(msg.sender == owner(), "Ownable: caller is not the owner");
     }
 
-    function getMyNFTs() external returns (uint256[] memory) {
+    function getMyNFTs() external view returns (uint256[] memory) {
         return myNFTs[msg.sender];
     }
 }
