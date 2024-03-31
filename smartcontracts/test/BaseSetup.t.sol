@@ -1,12 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-import {Counter} from "../src/Counter.sol";
 import {NFTzin} from "../src/NFTzin.sol";
 import {Utils} from "./Utils.t.sol";
 
 contract BaseSetup is Utils {
-    Counter counter;
     NFTzin nftzin;
 
     address[] _users;
@@ -36,7 +34,6 @@ contract BaseSetup is Utils {
 
         vm.startPrank(controller);
         nftzin = new NFTzin("NFTzin", "NFZ", "https://ipfs.io/ipfs/QmVaM1FwbsDuwfaRiYVYFL9iAcP1pFMaoE2tyTHf8k8Seo/");
-        counter = new Counter();
         vm.stopPrank();
     }
 
