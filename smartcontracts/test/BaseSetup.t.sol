@@ -33,7 +33,7 @@ contract BaseSetup is Utils {
         vm.label(zero, "ZERO");
 
         vm.startPrank(controller);
-        nftzin = new NFTzin("NFTzin", "NFZ", "https://ipfs.io/ipfs/QmVaM1FwbsDuwfaRiYVYFL9iAcP1pFMaoE2tyTHf8k8Seo/");
+        nftzin = new NFTzin("https://ipfs.io/ipfs/random/");
         vm.stopPrank();
     }
 
