@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.20;
 
 import {NFTzin} from "../src/NFTzin.sol";
 import {Utils} from "./Utils.t.sol";
@@ -33,9 +33,7 @@ contract BaseSetup is Utils {
         vm.label(zero, "ZERO");
 
         vm.startPrank(controller);
-        nftzin = new NFTzin("https://ipfs.io/ipfs/random/");
+        nftzin = new NFTzin("");
         vm.stopPrank();
     }
-
-    function test_basesetup_just_for_pass_in_converage() public {}
 }

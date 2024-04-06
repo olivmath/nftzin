@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.16;
+pragma solidity ^0.8.20;
 
 import {console2} from "forge-std/console2.sol";
 import {Test} from "forge-std/Test.sol";
@@ -40,6 +40,4 @@ contract Utils is Test {
     function bytes2uint(bytes32 b) public pure returns (uint256 result) {
         result = uint256(b);
     }
-
-    function test_utils_just_for_pass_in_converage() public {}
 }
