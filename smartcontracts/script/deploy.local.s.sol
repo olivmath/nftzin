@@ -12,7 +12,7 @@ contract Local is Script {
     function run() public {
         vm.startBroadcast(0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80);
 
-        nftzin = new NFTzin("https://ipfs.io/ipfs/");
+        nftzin = new NFTzin("ipfs://Qmcjsq941CGGcFFKq8VJxVjbbMKH9QCsx8JfgpGJnGzxK1/");
         console2.log("Deployed contract: ", address(nftzin));
 
         vm.stopBroadcast();
