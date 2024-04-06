@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity ^0.8.20;
 
 import {NFTHelper} from "./NFTzin.Helper.sol";
 
@@ -7,13 +7,11 @@ contract NFTzin is NFTHelper {
     constructor(string memory _baseURI) NFTHelper(_baseURI) {}
 
     function mintToMe() public payable {
+        zeroAddr(msg.sender);
         validateAmount();
         incrementSupply();
 
-        safeMint(msg.sender, currentNFTId);
-        myNFTs[msg.sender].push(currentNFTId);
-
-        emit Transfer(address(0x0), msg.sender, currentNFTId);
+        safeMint(msg.sender, tokenId);
     }
 
     function withdraw() external {

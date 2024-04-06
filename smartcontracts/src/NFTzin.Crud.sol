@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity ^0.8.20;
 
 import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
 import {NFTAuth} from "./NFTzin.Auth.sol";
@@ -9,12 +9,12 @@ contract NFTCrud is NFTAuth {
 
     constructor(string memory _baseURI) NFTAuth(_baseURI) {}
 
-    function getMyNFTs() external view returns (uint256[] memory) {
-        return myNFTs[msg.sender];
+    function myNFTs(address _owner) external view returns (uint256[] memory) {
+        return _myNFTs[_owner];
     }
 
-    function getMyURIs() external view returns (string[] memory) {
-        uint256[] memory nfts = myNFTs[msg.sender];
+    function getMyURIs(address _owner) external view returns (string[] memory) {
+        uint256[] memory nfts = _myNFTs[_owner];
         string[] memory uris = new string[](nfts.length);
 
         if (nfts.length == 0) {
@@ -32,12 +32,12 @@ contract NFTCrud is NFTAuth {
 
     function balanceOf(address _owner) public view virtual returns (uint256) {
         zeroAddr(_owner);
-        return _balances[owner];
+        return _balances[_owner];
     }
 
-    function ownerOf(uint256 tokenId) public view virtual returns (address) {
-        nftExists(tokenId);
-        return _owners[tokenId];
+    function ownerOf(uint256 _tokenId) public view virtual returns (address) {
+        nftExists(_tokenId);
+        return _owners[_tokenId];
     }
 
     function name() public view virtual returns (string memory) {
@@ -48,27 +48,23 @@ contract NFTCrud is NFTAuth {
         return "NFTZ";
     }
 
-    function tokenURI(uint256 tokenId) public view returns (string memory) {
-        nftExists(tokenId);
-        if (bytes(baseURI).length > 0) {
-            return string(abi.encodePacked(baseURI, tokenId.toString(), ".json"));
-        } else {
-            return "";
-        }
+    function tokenURI(uint256 _tokenId) public view returns (string memory) {
+        nftExists(_tokenId);
+        return string(abi.encodePacked(baseURI, _tokenId.toString(), ".json"));
     }
 
-    function approve(address to, uint256 tokenId, address auth) external {
-        nftExists(tokenId);
-        itsOwner(auth, tokenId);
+    function approve(address to, uint256 _tokenId, address auth) external {
+        nftExists(_tokenId);
+        itsOwner(auth, _tokenId);
 
-        _tokenApprovals[tokenId] = to;
-        emit Approval(auth, to, tokenId);
+        _tokenApprovals[_tokenId] = to;
+        emit Approval(auth, to, _tokenId);
     }
 
-    function getApproved(uint256 tokenId) external view returns (address) {
-        nftExists(tokenId);
+    function getApproved(uint256 _tokenId) external view returns (address) {
+        nftExists(_tokenId);
 
-        return _tokenApprovals[tokenId];
+        return _tokenApprovals[_tokenId];
     }
 
     function setApprovalForAll(address operator, bool approved) external {
@@ -82,48 +78,49 @@ contract NFTCrud is NFTAuth {
         return _operatorApprovals[_owner][operator];
     }
 
-    function _transferFrom(address from, address to, uint256 tokenId) internal {
-        nftExists(tokenId);
-        itsOwner(from, tokenId);
+    function _transferFrom(address from, address to, uint256 _tokenId) internal {
+        nftExists(_tokenId);
+        itsOwner(from, _tokenId);
         zeroAddr(to);
 
         unchecked {
             _balances[from]--;
             _balances[to]++;
         }
-        _tokenApprovals[tokenId] = address(0x0);
-        _owners[tokenId] = to;
-        emit Transfer(from, to, tokenId);
+        _tokenApprovals[_tokenId] = address(0x0);
+        _owners[_tokenId] = to;
+        emit Transfer(from, to, _tokenId);
     }
 
-    function transferFrom(address from, address to, uint256 tokenId) external {
-        _transferFrom(from, to, tokenId);
+    function transferFrom(address from, address to, uint256 _tokenId) external {
+        _transferFrom(from, to, _tokenId);
     }
 
-    function safeTransferFrom(address from, address to, uint256 tokenId) external {
-        safeTransferFrom(from, to, tokenId, "");
+    function safeTransferFrom(address from, address to, uint256 _tokenId) external {
+        safeTransferFrom(from, to, _tokenId, "");
     }
 
-    function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory data) public {
-        _transferFrom(from, to, tokenId);
+    function safeTransferFrom(address from, address to, uint256 _tokenId, bytes memory data) public {
+        _transferFrom(from, to, _tokenId);
         safeTransfer(to, data);
     }
 
-    function _mint(address to, uint256 tokenId) internal {
+    function _mint(address to, uint256 _tokenId) internal {
         zeroAddr(to);
 
         unchecked {
             _balances[to]++;
         }
 
-        _tokenApprovals[tokenId] = address(0x0);
-        _owners[tokenId] = to;
+        _tokenApprovals[_tokenId] = address(0x0);
+        _myNFTs[to].push(_tokenId);
+        _owners[_tokenId] = to;
 
-        emit Transfer(address(0x0), to, tokenId);
+        emit Transfer(address(0x0), to, _tokenId);
     }
 
-    function safeMint(address to, uint256 tokenId) internal {
-        _mint(to, tokenId);
+    function safeMint(address to, uint256 _tokenId) internal {
+        _mint(to, _tokenId);
         safeTransfer(to, "");
     }
 }

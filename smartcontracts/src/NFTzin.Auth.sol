@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity ^0.8.20;
 
 import {NFTStorage} from "./NFTzin.Storage.sol";
 
@@ -36,30 +36,30 @@ contract NFTAuth is NFTStorage {
     }
 
     function incrementSupply() internal {
-        uint256 newTokenId = currentNFTId + 1;
+        uint256 newTokenId = tokenId + 1;
         if (newTokenId > TOTAL_SUPPLY) {
             revert MaxSupply();
         }
-        currentNFTId = newTokenId;
+        tokenId = newTokenId;
     }
 
-    function nftExists(uint256 tokenId) internal view {
-        address _owner = _owners[tokenId];
+    function nftExists(uint256 _tokenId) internal view {
+        address _owner = _owners[_tokenId];
         if (_owner == address(0)) {
-            revert NonexistentToken(tokenId);
+            revert NonexistentToken(_tokenId);
         }
     }
 
-    function itsOwner(address auth, uint256 tokenId) internal view {
-        address _owner = _owners[tokenId];
+    function itsOwner(address auth, uint256 _tokenId) internal view {
+        address _owner = _owners[_tokenId];
         if (_owner != auth) {
             revert Unauthorized();
         }
     }
 
-    function itsAllowed(address caller, uint256 tokenId) internal view {
+    function itsAllowed(address caller, uint256 _tokenId) internal view {
         bool a = _operatorApprovals[msg.sender][caller];
-        bool b = caller == _tokenApprovals[tokenId];
+        bool b = caller == _tokenApprovals[_tokenId];
 
         if (a || b) {
             revert Unauthorized();
@@ -67,12 +67,12 @@ contract NFTAuth is NFTStorage {
     }
 
     function safeTransfer(address to, bytes memory data) internal view {
-        uint256 size = to.code.length;
-        bytes4 selector = ERC721TokenReceiver(to).onERC721Received(address(0x0), address(0x0), 0, data);
+        // uint256 size = to.code.length;
+        // bytes4 selector = ERC721TokenReceiver(to).onERC721Received(address(0x0), address(0x0), 0, data);
 
-        if (size > 0 && selector != ERC721TokenReceiver.onERC721Received.selector) {
-            revert InsecureReceiver();
-        }
+        // if (size > 0 && selector != ERC721TokenReceiver.onERC721Received.selector) {
+        //     revert InsecureReceiver();
+        // }
     }
 }
 
