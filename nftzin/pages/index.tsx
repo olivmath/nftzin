@@ -26,7 +26,7 @@ const Home: NextPage = () => {
           justifyContent: "center",
         }}
       >
-        <main>NFTzin</main>
+        <main>Vrum</main>
       </div>
     </>
   );

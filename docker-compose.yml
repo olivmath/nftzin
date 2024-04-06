@@ -4,7 +4,7 @@ services:
     depends_on:
       - deploy
     build:
-      context: ./nftzin
+      context: ./vrum
       dockerfile: Dockerfile
     ports:
       - 3000:3000

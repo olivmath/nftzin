@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {NFTzin} from "../src/NFTzin.sol";
+import {Vrum} from "../src/Vrum.sol";
 import {Utils} from "./Utils.t.sol";
 
 contract BaseSetup is Utils {
-    NFTzin nftzin;
+    Vrum vrum;
 
     address[] _users;
     address controller;
@@ -33,7 +33,7 @@ contract BaseSetup is Utils {
         vm.label(zero, "ZERO");
 
         vm.startPrank(controller);
-        nftzin = new NFTzin("");
+        vrum = new Vrum("");
         vm.stopPrank();
     }
 }

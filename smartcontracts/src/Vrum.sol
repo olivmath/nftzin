@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {NFTHelper} from "./NFTzin.Helper.sol";
+import {NFTHelper} from "./Vrum.Helper.sol";
 
-contract NFTzin is NFTHelper {
+contract Vrum is NFTHelper {
     constructor(string memory _baseURI) NFTHelper(_baseURI) {}
 
     function mintToMe() public payable {

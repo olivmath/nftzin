@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Strings} from "openzeppelin-contracts/contracts/utils/Strings.sol";
-import {NFTAuth} from "./NFTzin.Auth.sol";
+import {NFTAuth} from "./Vrum.Auth.sol";
 
 contract NFTCrud is NFTAuth {
     using Strings for uint256;
@@ -41,7 +41,7 @@ contract NFTCrud is NFTAuth {
     }
 
     function name() public view virtual returns (string memory) {
-        return "NFTzin";
+        return "Vrum";
     }
 
     function symbol() public view virtual returns (string memory) {

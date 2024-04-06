@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {NFTEvents} from "./NFTzin.Events.sol";
-import {NFTErrors} from "./NFTzin.Errors.sol";
+import {NFTEvents} from "./Vrum.Events.sol";
+import {NFTErrors} from "./Vrum.Errors.sol";
 
 contract NFTStorage is NFTEvents, NFTErrors {
     uint256 public constant MINT_PRICE = 0.00008 ether;

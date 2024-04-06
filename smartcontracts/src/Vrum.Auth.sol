@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {NFTStorage} from "./NFTzin.Storage.sol";
+import {NFTStorage} from "./Vrum.Storage.sol";
 
 contract NFTAuth is NFTStorage {
     constructor(string memory _baseURI) NFTStorage(_baseURI) {}

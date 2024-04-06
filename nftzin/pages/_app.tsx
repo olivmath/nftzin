@@ -30,7 +30,7 @@ import Layout from "./layout";
 const { wallets } = getDefaultWallets();
 
 const config = getDefaultConfig({
-  appName: "NFTzin",
+  appName: "Vrum",
   projectId: "4f1214",
   wallets: [
     ...wallets,
