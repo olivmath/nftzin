@@ -1,11 +1,17 @@
 import { useEffect } from 'react';
-import { useAccount } from 'wagmi';
+import { useAccount, useReadContract } from 'wagmi';
 import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
 
 const ViewPage: NextPage = () => {
   const { isConnected } = useAccount();
   const router = useRouter();
+  const { data: readData, isLoading: readLoading } = useReadContract({
+    address: contractAddress,
+    abi: ,
+    functionName: 'balanceOf',
+    args: [testAddress],
+  });
 
   useEffect(() => {
     if (!isConnected) {
