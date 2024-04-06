@@ -26,10 +26,10 @@ TRANSACTIONS_PATH = f"broadcast/{CONTRACT_SCRIPT_NAME}/{CHAIN_ID}/run-latest.jso
 TARGET_DIR = "../frontend/generated/deployedContracts.ts"
 DAPP_DIR = "../dapp/public"
 
-def save_abi_into_dapp(name: str, address: str, abi: dict):
-    code = f"   "
-    with open(f"{DAPP_DIR}/{name}.js", "w") as abi_file:
-        abi_file.write(dumps(json_config))
+# def save_abi_into_dapp(name: str, address: str, abi: dict):
+#     code = f"   "
+#     with open(f"{DAPP_DIR}/{name}.js", "w") as abi_file:
+#         abi_file.write(dumps(json_config))
 
 
 def abi_path(name) -> str:
@@ -46,7 +46,7 @@ with open(TRANSACTIONS_PATH) as deployed_contracts:
             name, address = contract["contractName"], contract["contractAddress"]
             with open(abi_path(name)) as full_abi_json:
                 abi = load(full_abi_json)["abi"]
-                save_abi_into_dapp(name, address, abi)
+                # save_abi_into_dapp(name, address, abi)
                 contracts.append(Contract(name, address, abi))
 
 
