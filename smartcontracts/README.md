@@ -1,10 +1,9 @@
 # FullStack Web3 Foundry
 
-
-
-NFTzin.sol (Domain)
-NFTzin.Helper.sol
-NFTzin.Crud.sol
-NFTzin.Auth.sol
-NFTzin.Storage.sol
 NFTzin.Events.sol
+NFTzin.Errors.sol
+└── NFTzin.Storage.sol
+    └── NFTzin.Auth.sol
+        └── NFTzin.Crud.sol
+            └── NFTzin.Helper.sol
+                └── NFTzin.sol
