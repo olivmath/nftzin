@@ -1,0 +1,25 @@
+{
+    "nft_id": "01574b6e013c925f21121772b09d597936dd804e53299f58adfbd77ac3898729",
+    "description_id": "49992cb119f9e4671bd759c358cd1661e168fd39c5e7bbcdefe302696312e211",
+    "name": "NFT #58",
+    "description": "Wrapped in purple mystery, on a serene ride, a pickup ready for hard work and highlighted yellow wheels.",
+    "image": "ipfs://QmcRNcm7n4W2zUF81r3JPXXL2N4FrvL86ukkdEfMbCA3bL/58.png",
+    "attributes": [
+        {
+            "trait_type": "background_color",
+            "value": "background-purple"
+        },
+        {
+            "trait_type": "speed",
+            "value": "30"
+        },
+        {
+            "trait_type": "car_model",
+            "value": "pickup-yellow"
+        },
+        {
+            "trait_type": "wheel_color",
+            "value": "wheel-yellow"
+        }
+    ]
+}
