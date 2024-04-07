@@ -28,8 +28,8 @@ DAPP_DIR = "../vrum/public"
 
 def save_abi_into_dapp(address: str, abi: list):
     data = {"vrum": {"address": address, "abi": abi}}
-    code = f'const assets={dumps(data)} as const; export default assets'
-    with open(f"{DAPP_DIR}/assets.ts", "w") as abi_file:
+    code = f'const contractsMetadata={dumps(data)} as const; export default contractsMetadata'
+    with open(f"{DAPP_DIR}/contractsMetadata.ts", "w") as abi_file:
         abi_file.write(code)
 
 
