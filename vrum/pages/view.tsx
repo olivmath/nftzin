@@ -1,17 +1,30 @@
-import { useEffect } from 'react';
-import { useAccount, useReadContract } from 'wagmi';
-import { useRouter } from 'next/router';
-import type { NextPage } from 'next';
+import contractsMetadata from "../public/contractsMetadata";
+import { useAccount, useReadContract } from "wagmi";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import type { NextPage } from "next";
+import { Address } from "viem";
+import NFTCard from "../components/NFTCard";
 
 const ViewPage: NextPage = () => {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
   const router = useRouter();
-  const { data: readData, isLoading: readLoading } = useReadContract({
-    address: contractAddress,
-    abi: ,
-    functionName: 'balanceOf',
-    args: [testAddress],
+  const [nftUris, setNftUris] = useState<string[]>([]);
+
+  // Verificar saldo do usuário
+  const { data: uris } = useReadContract({
+    address: contractsMetadata.vrum.address,
+    abi: contractsMetadata.vrum.abi,
+    functionName: "getMyURIs",
+    args: [address as Address],
   });
+
+  useEffect(() => {
+    if (uris) {
+      console.log(uris);
+      setNftUris(uris as string[]);
+    }
+  }, [uris]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -20,15 +33,15 @@ const ViewPage: NextPage = () => {
   }, [isConnected, router]);
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
+    <div>
       <h1>Seu NFT aqui</h1>
+      <div
+        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+      >
+        {nftUris.map((uri, index) => (
+          <NFTCard key={index} metadataUrl={uri} />
+        ))}
+      </div>
     </div>
   );
 };
