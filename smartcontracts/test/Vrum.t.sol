@@ -87,4 +87,44 @@ contract VrumTest is BaseSetup {
         assertEq(bobsNfts[2], 3);
         assertEq(bobsNfts[3], 4);
     }
+
+    function test_TransferNFTFromBobToAlice() public {
+        vm.startPrank(bob);
+        vrum.mintToMe{value: 0.08 ether}();
+        vrum.mintToMe{value: 0.08 ether}();
+        vrum.mintToMe{value: 0.08 ether}();
+        vrum.mintToMe{value: 0.08 ether}();
+        vm.stopPrank();
+
+        uint256 bobInitialBalance = vrum.balanceOf(bob);
+        uint256 aliceInitialBalance = vrum.balanceOf(alice);
+
+        uint256 tokenIdToTransfer = 3;
+
+        vm.prank(bob);
+        vrum.transferFrom(bob, alice, tokenIdToTransfer);
+
+
+        uint256 bobFinalBalance = vrum.balanceOf(bob);
+        uint256 aliceFinalBalance = vrum.balanceOf(alice);
+
+        assertEq(bobFinalBalance, bobInitialBalance - 1);
+        assertEq(aliceFinalBalance, aliceInitialBalance + 1);
+
+        uint256[] memory bobsNFTs = vrum.myNFTs(bob);
+        assertEq(bobsNFTs.length, 3);
+        assertEq(bobsNFTs[0], 1);
+        assertEq(bobsNFTs[1], 2);
+        assertEq(bobsNFTs[2], 4);
+
+        string[] memory bobsUri = vrum.getMyURIs(bob);
+        assertEq(bobsUri.length, 3);
+
+        uint256[] memory alicesNFTs = vrum.myNFTs(alice);
+        assertEq(alicesNFTs.length, 1);
+        string[] memory alicesUri = vrum.getMyURIs(alice);
+        assertEq(alicesUri.length, 1);
+
+        assertEq(vrum.ownerOf(tokenIdToTransfer), alice);
+    }
 }

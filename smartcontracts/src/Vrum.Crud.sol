@@ -87,6 +87,10 @@ contract NFTCrud is NFTAuth {
             _balances[from]--;
             _balances[to]++;
         }
+
+        removeTokenIdFromList(from, _tokenId);
+        _myNFTs[to].push(_tokenId);
+
         _tokenApprovals[_tokenId] = address(0x0);
         _owners[_tokenId] = to;
         emit Transfer(from, to, _tokenId);
@@ -122,5 +126,23 @@ contract NFTCrud is NFTAuth {
     function safeMint(address to, uint256 _tokenId) internal {
         _mint(to, _tokenId);
         safeTransfer(to, "");
+    }
+
+    function removeTokenIdFromList(address from, uint256 _tokenId) internal {
+        uint256 indexToRemove = 0;
+        bool found = false;
+        for (uint256 i = 0; i < _myNFTs[from].length; i++) {
+            if (_myNFTs[from][i] == _tokenId) {
+                indexToRemove = i;
+                found = true;
+                break;
+            }
+        }
+        require(found, "TokenID not found for owner.");
+
+        if (indexToRemove < _myNFTs[from].length - 1) {
+            _myNFTs[from][indexToRemove] = _myNFTs[from][_myNFTs[from].length - 1];
+        }
+        _myNFTs[from].pop();
     }
 }
