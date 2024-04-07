@@ -1,4 +1,5 @@
 # VRUM NFT project
+![Frame 1](https://github.com/olivmath/vrum/assets/50037567/e809abc7-0c42-4abb-a95a-3f439ef880ed)
 
 ### Images IPFS
 
