@@ -5,6 +5,8 @@ import { useRouter } from "next/router";
 import type { NextPage } from "next";
 import { Address } from "viem";
 import NFTCard from "../components/NFTCard";
+import { extractTokenId } from "../services/tokenId.service";
+import ClaimNFT from "../components/ClaimNFT";
 
 const ViewPage: NextPage = () => {
   const { isConnected, address } = useAccount();
@@ -12,7 +14,7 @@ const ViewPage: NextPage = () => {
   const [nftUris, setNftUris] = useState<string[]>([]);
 
   // Verificar saldo do usuário
-  const { data: uris } = useReadContract({
+  const { data: uris, isLoading, isError } = useReadContract({
     address: contractsMetadata.vrum.address,
     abi: contractsMetadata.vrum.abi,
     functionName: "getMyURIs",
@@ -20,27 +22,28 @@ const ViewPage: NextPage = () => {
   });
 
   useEffect(() => {
-    if (uris) {
-      console.log(uris);
-      setNftUris(uris as string[]);
-    }
-  }, [uris]);
-
-  useEffect(() => {
     if (!isConnected) {
       router.push("/");
+    } else if (!isLoading && !isError && uris && uris.length > 0) {
+      setNftUris(uris as string[]);
     }
-  }, [isConnected, router]);
-
+  }, [isConnected, isLoading, isError, uris, router]);
   return (
     <div>
-      <h1>Seu NFT aqui</h1>
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        {nftUris.map((uri, index) => (
-          <NFTCard key={index} metadataUrl={uri} />
-        ))}
+        {!isLoading && !isError && nftUris.length > 0 ? (
+          nftUris.map((uri, index) => (
+            <NFTCard
+              key={index}
+              metadataUrl={uri}
+              tokenId={extractTokenId(uri)}
+            />
+          ))
+        ) : (
+          <ClaimNFT />
+        )}
       </div>
     </div>
   );
